@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package traffic;
+
+option go_package = "./;main";
+
+// Address structure as defined in your Go struct
+message UprobeAddressInfo {
+  uint32 family = 1;
+  uint32 saddr4 = 2;
+  uint32 daddr4 = 3;
+  bytes saddr6 = 4; // 16 bytes
+  bytes daddr6 = 5; // 16 bytes
+  uint32 sport = 6; // uint16 in Go, but uint32 here to avoid wire truncation
+  uint32 dport = 7; // same as above
+}
+
+// Event structure matching your uprobeGoTlsEvent
+message GoTlsEvent {
+  uint64 goid = 1;
+  uint64 ts_ns = 2;
+  uint32 fd = 3;
+  uint32 pid = 4;
+  uint32 tid = 5;
+  UprobeAddressInfo address_info = 6;
+  int32 data_len = 7;
+  uint32 event_type = 8;
+  string comm = 9; // Should be extracted from [16]int8
+  bytes data = 10; // event.Data[0:event.DataLen]
+  string uid = 11;
+  string node = 12;
+}
+
+// Acknowledgement from the server
+message StreamResponse {
+  string status = 1;
+}
+
+// gRPC service definition for collector-to-hub streaming
+service TrafficCollector {
+  rpc StreamEvents(stream GoTlsEvent) returns (StreamResponse);
+}
