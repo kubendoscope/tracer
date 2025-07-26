@@ -58,6 +58,15 @@ jobs:
         path: ./tracer
         # secrets.GITHUB_TOKEN
         repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Create a release and upload artifacts
+    - uses: ncipollo/release-action@v1
+      with:
+        artifacts: "tracer"
+        body: |
+          tracer-${{ github.event.inputs.version }}:
+            Download on a master node running kube-apiserver. You can specify the host and port of the hub to send the events to it. In any case, it will write all the events to stdout.
+        tag: ${{ github.event.inputs.version }}
           
 
     
