@@ -32,8 +32,10 @@ jobs:
         # Set up cc/clang/c++/clang++ executables
         cc: 1
 
-    - name: Setup libbpf headers
-      run: sudo apt-get install -y libbpf-dev
+    - name: Setup libbpf headers and libcapstone
+      run: |
+        sudo apt-get install -y libbpf-dev build-essential xz-utils sudo
+        ./install-libcapstone.sh
 
     - name: Fetch go dependencies
       run: go mod tidy
