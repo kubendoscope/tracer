@@ -32,6 +32,9 @@ jobs:
         # Set up cc/clang/c++/clang++ executables
         cc: 1
 
+    - name: Setup libbpf headers
+      run: sudo apt-get install -y libbpf-dev
+
     - name: Fetch go dependencies
       run: go mod tidy
 
