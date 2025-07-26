@@ -35,6 +35,7 @@ jobs:
     - name: Setup libbpf headers and libcapstone
       run: |
         sudo apt-get install -y libbpf-dev build-essential xz-utils sudo
+        chmod +x ./install-libcapstone.sh
         ./install-libcapstone.sh
 
     - name: Fetch go dependencies
