@@ -5,8 +5,8 @@ if (( $EUID != 0 )); then
     SUDO='sudo'
 fi
 
-curl https://github.com/capstone-engine/capstone/releases/download/5.0-rc2/capstone-5.0-rc2.tar.xz -Lo ./capstone.tar.xz \
- && tar -xf capstone.tar.xz && mv ./capstone-* ./capstone \
+curl https://github.com/capstone-engine/capstone/archive/refs/tags/4.0.1.tar.gz -Lo ./capstone.tar.gz \
+ && tar -xf capstone.tar.gz && mv ./capstone-* ./capstone \
  && cd capstone \
  && CAPSTONE_ARCHS="aarch64 x86" ./make.sh \
  && $SUDO ./make.sh install
